@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block share_head %}{% endblock %}
+</head>
+
+<body style="padding-top: 70px;">
+  {% block share_menu %}{% endblock %}
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <form method="post" class="form-inline">{% csrf_token %}
+        <div class="col-md-4">
+          <label>ISBN</label>
+          <input type="number" class="form-control" name="isbn">
+          <button type="submit" class="btn btn-default" name="form_action" value="trace">Trace</button>
+        </div>
+        <div class="col-md-1 col-md-offset-7">
+          <button type="submit" class="btn btn-default" name="form_action" value="update">Update</button>
+        </div>
+    </form>
+  </div>
+  <hr>
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Find Number</th>
+            <th>Status</th>
+            <th>Func.</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for trace_book in trace_books %}
+            <tr>
+              <td>{{trace_book.isbn}}</td>
+              <td>{{trace_book.title}}</td>
+              <td>{{trace_book.find_number}}</td>
+              <td>{{trace_book.status}}</td>
+              <td><a href="/remove/{{trace_book.isbn}}/">Remove</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>

@@ -13,3 +13,7 @@ class Books(ndb.Model):
     isbn = ndb.StringProperty()
     find_number = ndb.StringProperty()
     record = ndb.StringProperty()
+    status = ndb.StringProperty()
+
+class UserTraceBooks(ndb.Model):
+    isbn = ndb.StringProperty()

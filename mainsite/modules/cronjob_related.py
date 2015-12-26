@@ -17,7 +17,7 @@ class CronJobRelated:
         title_ptn = re.compile('\<title\>(.*?)\<\/title\>')
         link_ptn = re.compile('\<link\>(.*?)\<\/link\>')
         find_number_ptn = re.compile('\<\!\-\- field C \-\-\>\&nbsp\;([\w\-\.\/ ]+)?\<')
-        ## status_ptn = re.compile('\<\!\-\- field \% \-\-\>\&nbsp\;(.*?)\<\/td\>')
+        status_ptn = re.compile('\<\!\-\- field \% \-\-\>\&nbsp\;(.*?)\<\/td\>')
         isbn_ptn = re.compile('\<guid isPermaLink\=\"false\"\>([\d\-]+)')
         record_ptn = re.compile('record\=(\w+)\*')
 
@@ -50,6 +50,7 @@ class CronJobRelated:
             book_page_source = urllib2.urlopen(link).read().decode('utf-8')
             try:
                 find_number = find_number_ptn.findall(book_page_source)[0]
+                status = status_ptn.findall(book_page_source)[0]
             except:
                 logging.warning('find_number is empty in %s' % link)
                 failed_count = failed_count + 1
@@ -59,7 +60,9 @@ class CronJobRelated:
             ## Search if the record in db, then skip this record
             book_result = Books.query(Books.link == link).get()
             if book_result == None:
-                Books(school=library_result.school_name, title=title, link=link, isbn=isbn, find_number=find_number, record=record)
+                Books(school=library_result.school_name, title=title, link=link,
+                      isbn=isbn, find_number=find_number, record=record, status=status).put()
+                      
                 logging.info('store %s into db' % link)
                 success_count = success_count + 1
                 parse_count = parse_count + 1
