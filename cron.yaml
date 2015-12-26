@@ -1,0 +1,4 @@
+cron:
+- description: update books from ntust
+  url: /rss_update/ntust/
+  schedule: every 15 minutes

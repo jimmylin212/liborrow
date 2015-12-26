@@ -18,5 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^rss_update/(\w+)/$', 'mainsite.views.rss_update'),
     url(r'^$', 'mainsite.views.home'),
+
 ]
