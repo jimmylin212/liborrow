@@ -19,10 +19,12 @@ class BookRelated:
                 trace_book.title = book_info.title
                 trace_book.status = book_info.status
                 trace_book.find_number = book_info.find_number
+                trace_book.link = book_info.link
             else:
                 trace_book.title = None
                 trace_book.status = None
                 trace_book.find_number = None
+                trace_book.link = '#'
 
         return trace_books
 
@@ -32,12 +34,16 @@ class BookRelated:
         trace_books = UserTraceBooks.query().fetch()
         for trace_book in trace_books:
             book_info = Books.query(Books.isbn == trace_book.isbn).get()
-            book_page_source = urllib2.urlopen(book_info.link).read().decode('utf-8')
-            status = status_ptn.findall(book_page_source)[0]
+            if book_info != None:
+                book_page_source = urllib2.urlopen(book_info.link).read().decode('utf-8')
+                status = status_ptn.findall(book_page_source)[0]
 
-            if status != book_info.status:
-                book_info.status = status
-                book_info.put()
-                update_count = update_count + 1
+                if status != book_info.status:
+                    book_info.status = status
+                    book_info.put()
+                    update_count = update_count + 1
+                    logging.info('Update info for book %s' % trace_book.isbn)
+            else:
+                logging.info('No info for book %s' % trace_book.isbn)
 
         logging.info('update %s book status' % update_count)

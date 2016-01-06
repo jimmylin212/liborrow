@@ -39,7 +39,7 @@
         <tbody>
           {% for trace_book in trace_books %}
             <tr>
-              <td>{{trace_book.isbn}}</td>
+              <td><a href="{{trace_book.link}}" target="_blank">{{trace_book.isbn}}</a></td>
               <td>{{trace_book.title}}</td>
               <td>{{trace_book.find_number}}</td>
               <td>{{trace_book.status}}</td>
