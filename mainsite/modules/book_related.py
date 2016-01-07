@@ -1,4 +1,5 @@
 import urllib2, re, logging
+from parser import Parser
 from ..models import UserTraceBooks, Books
 
 class BookRelated:
@@ -47,3 +48,8 @@ class BookRelated:
                 logging.info('No info for book %s' % trace_book.isbn)
 
         logging.info('update %s book status' % update_count)
+
+    def add_new_book_by_record(self, record):
+        parser = Parser()
+        isbn = parser.ntust_book_page_parser(record)
+        return isbn

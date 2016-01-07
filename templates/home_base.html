@@ -13,7 +13,7 @@
       <form method="post" class="form-inline">{% csrf_token %}
         <div class="col-md-4">
           <div class="input-group">
-            <input type="number" class="form-control" name="isbn" placeholder="ISBN...">
+            <input type="text" class="form-control" name="trace_book_info" placeholder="ISBN or record number...">
             <div class="input-group-btn">
               <button type="submit" class="btn btn-default" name="form_action" value="trace">Trace</button>
               <button type="submit" class="btn btn-info" name="form_action" value="update">Update</button>
