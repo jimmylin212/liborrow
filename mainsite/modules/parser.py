@@ -12,7 +12,7 @@ class Parser:
         book_page_source = urllib2.urlopen(link).read().decode('utf-8')
 
         try:
-            title = title_ptn.findall(book_page_source)[0]
+            title = title_ptn.findall(book_page_source)[0].replace('&#59', '')
             find_number = find_number_ptn.findall(book_page_source)[0].rstrip()
             status = status_ptn.findall(book_page_source)[0]
             isbn = isbn_ptn.findall(book_page_source)[0].replace('-', '')
